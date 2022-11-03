@@ -10,59 +10,53 @@ import cozmo
 from cozmo.objects import LightCube1Id, LightCube2Id, LightCube3Id
 from cozmo.util import degrees, distance_mm
 
-# Get the token
-# url = "http://localhost:8000/api/token/"
-# payload = {'username': 'admin', 'password': 'admin'}
-# headers = {'Content-Type': 'application/json'}
-# response = requests.request("POST", url, headers=headers, data=json.dumps(payload))
-# token = response.json()['access']
-
-# Get the data
+# Get ingredients
 indegredientsUrl = "https://www.thecocktaildb.com/api/json/v2/9973533/list.php?i=list"
 response = requests.request("GET", indegredientsUrl)
 
-#create array of ingredients
+# create array of ingredients
 ingredients = []
 for ing in response.json()['drinks']:
     ingredients.append(ing['strIngredient1'])
 for i in range(len(ingredients)):
-    print("{} {}".format(i,ingredients[i]) , end="\n")
+    print("{} {}".format(i + 1, ingredients[i]), end="\n")
 
 
-#prompt user to pick ingredient and append to cocktailUrl
+# prompt user to pick ingredient and get available drinks
 cocktailUrl = "https://www.thecocktaildb.com/api/json/v2/9973533/filter.php?i="
-cocktailUrl += ingredients[int(input("Enter an ingredient -> Choose number: "))]
+ingredientIndex = int(input("\nEnter an ingredient -> Choose number: ")) - 1
+cocktailUrl += ingredients[ingredientIndex]
 response = requests.request("GET", cocktailUrl).json()['drinks']
 
-#clear the screen
+# clear the screen
 print("\033c")
 
-#parse json response
-drinks = []
 
+drinks = []
 if(response == "None Found"):
     response = []
 
 for drink in response:
     drinks.append(drink['strDrink'])
+print("Drinks containing {}:\n".format(ingredients[ingredientIndex]))   
+
 for i in range(len(drinks)):
-    print("{} {}".format(i,drinks[i]) , end="\n")
+    print("{} {}".format(i + 1, drinks[i]), end="\n")
 
-    
 if(drinks == []):
-    print("No drinks found")
+    print("\nNo drinks found")
 else:
-    #prompt user to pick drink
-    chosen_drink = drinks[int(input("Enter a drink -> Choose number: "))]
-    #clear the screen
-    print("\033c")
+    # prompt user to pick drink
+    chosen_drink = drinks[int(input("\nEnter a drink -> Choose number: ")) - 1]
+   
+    # print("\033c")
+    print("\n")
 
-    #Divide drinks into 3 groups of arrays
+    # Divide drinks into groups of arrays for assigning to cubes
     def divide_chunks(l, n):
         # looping till length l
         for i in range(0, len(l), n):
             yield l[i:i + n]
-
 
     drinksGroups = []
     if(len(drinks) > 3):
@@ -73,21 +67,24 @@ else:
 
     # print(drinksGroups)
 
-    #assign each group to a cube
-    cubeId = LightCube1Id
+    # assign each group to a cube
+    cubeDictioanry = {
+        1: "PaperClip Cube",
+        2: "Lamp / Heart Cube",
+        3: "ab over T Cube"
+    }
+
     for i in range(len(drinksGroups)):
+        try:
+            print("Group {} - {}".format(i + 1, cubeDictioanry[i + 1]))
+        except:
+            print("Group {} - {}".format(i + 1, cubeDictioanry[3]))
 
-        print(drinksGroups)
-
-
-    for i in range(len(drinksGroups)):
-        print("Group {}".format(i + 1))
         g = drinksGroups[i]
         g.sort()
         for drink in g:
             print(drink, end=", ")
         print("\n")
-
 
     if(chosen_drink in drinksGroups[0]):
         print("\n\nYou chose {} which is in group 1: Cozmo should bring back the cube that looks like a paperclip \n".format(chosen_drink)) 
