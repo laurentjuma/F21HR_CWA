@@ -126,10 +126,21 @@ def go_to_object_test(robot: cozmo.robot.Robot):
     if cube:
         # Drive to 70mm away from the cube (much closer and Cozmo
         # will likely hit the cube) and then stop.
-        action = robot.go_to_object(cube, distance_mm(70.0))
-        action.wait_for_completed()
-        print("Completed action: result = %s" % action)
-        print("Done.")
+
+        # action = robot.go_to_object(cube, distance_mm(70.0))
+        # action.wait_for_completed()
+        # print("Completed action: result = %s" % action)
+        # print("Done.")
+
+        current_action = robot.pickup_object(cube, num_retries=3)
+        current_action.wait_for_completed()
+        if current_action.has_failed:
+            code, reason = current_action.failure_reason
+            result = current_action.result
+            print("Pickup Cube failed: code=%s reason='%s' result=%s" % (code, reason, result))
+            return
+
+
 
 
 async def connect_to_cubes(robot: cozmo.robot.Robot):
