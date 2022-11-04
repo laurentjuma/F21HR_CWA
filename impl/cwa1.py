@@ -87,14 +87,14 @@ else:
         print("\n")
 
     if(chosen_drink in drinksGroups[0]):
-        print("\n\nYou chose {} which is in group 1: Cozmo should bring back the cube that looks like a paperclip \n".format(chosen_drink)) 
-        cubeId = 1 # looks like a paperclip - LightCube1ID
+        print("\n\nYou chose {} which is in group 1: Cozmo should bring back the cube that looks like a paperclip - {}\n".format(chosen_drink, LightCube1Id)) 
+        cubeId = LightCube1Id # looks like a paperclip - LightCube1ID
     elif(chosen_drink in drinksGroups[1]):
-        print("\n\nYou chose {} which is in group 2: Cozmo should bring back the cube that looks like a lamp / heart\n".format(chosen_drink)) 
-        cubeId = 2 # looks like a lamp / heart - LightCube2ID
+        print("\n\nYou chose {} which is in group 2: Cozmo should bring back the cube that looks like a lamp / heart - {}\n".format(chosen_drink, LightCube2Id)) 
+        cubeId = LightCube2Id # looks like a lamp / heart - LightCube2ID
     else:
-        print("\n\nYou chose {} which is in group 3 onwards : Cozmo should bring back the cube that looks like the letters 'ab' over 'T'\n".format(chosen_drink)) 
-        cubeId = 3 # looks like the letters 'ab' over 'T' - LightCube3ID
+        print("\n\nYou chose {} which is in group 3 onwards : Cozmo should bring back the cube that looks like the letters 'ab' over 'T' - {}\n".format(chosen_drink, LightCube3Id)) 
+        cubeId = LightCube3Id # looks like the letters 'ab' over 'T' - LightCube3ID
 
 
 def go_to_object_test(robot: cozmo.robot.Robot):
@@ -113,6 +113,7 @@ def go_to_object_test(robot: cozmo.robot.Robot):
 
     try:
         # cube = robot.world.wait_for_observed_light_cube(timeout=30)
+        print("Looking for cube - {}".format(cubeId))
         cube = robot.world.get_light_cube(cubeId)
 
         print("Found cube: %s" % cube)
