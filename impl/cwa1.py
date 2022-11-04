@@ -103,11 +103,11 @@ def go_to_object_test(robot: cozmo.robot.Robot):
     # requiredCube = robot.world.get_light_cube(drinks["sundowner"])
 
     # Move lift down and tilt the head up
-    robot.move_lift(-3)
-    robot.set_head_angle(degrees(0)).wait_for_completed()
+    # robot.move_lift(-3)
+    # robot.set_head_angle(degrees(0)).wait_for_completed()
 
     # look around and try to find a cube
-    look_around = robot.start_behavior(cozmo.behavior.BehaviorTypes.LookAroundInPlace)
+    # look_around = robot.start_behavior(cozmo.behavior.BehaviorTypes.LookAroundInPlace)
 
     cube = None
 
@@ -119,9 +119,9 @@ def go_to_object_test(robot: cozmo.robot.Robot):
         print("Found cube: %s" % cube)
     except asyncio.TimeoutError:
         print("Didn't find a cube")
-    finally:
+    # finally:
         # whether we find it or not, we want to stop the behavior
-        look_around.stop()
+        # look_around.stop()
 
     if cube:
         # Drive to 70mm away from the cube (much closer and Cozmo
