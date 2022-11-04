@@ -140,6 +140,10 @@ def go_to_object_test(robot: cozmo.robot.Robot):
             print("Pickup Cube failed: code=%s reason='%s' result=%s" % (code, reason, result))
             return
 
+        # Turn 180 degrees
+        # Note: To turn to the right, just use a negative number.
+        robot.turn_in_place(degrees(180)).wait_for_completed()    
+
 
 
 
