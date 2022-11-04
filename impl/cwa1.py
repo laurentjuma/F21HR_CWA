@@ -132,5 +132,12 @@ def go_to_object_test(robot: cozmo.robot.Robot):
         print("Done.")
 
 
+async def connect_to_cubes(robot: cozmo.robot.Robot):
+    await robot.world.connect_to_cubes()
+
+
+cozmo.robot.Robot.drive_off_charger_on_connect = False
+cozmo.run_program(connect_to_cubes)
+
 cozmo.run_program(go_to_object_test)
 
