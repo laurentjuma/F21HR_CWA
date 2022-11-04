@@ -88,13 +88,13 @@ else:
 
     if(chosen_drink in drinksGroups[0]):
         print("\n\nYou chose {} which is in group 1: Cozmo should bring back the cube that looks like a paperclip \n".format(chosen_drink)) 
-        cubeId = LightCube1Id # looks like a paperclip
+        cubeId = 1 # looks like a paperclip - LightCube1ID
     elif(chosen_drink in drinksGroups[1]):
         print("\n\nYou chose {} which is in group 2: Cozmo should bring back the cube that looks like a lamp / heart\n".format(chosen_drink)) 
-        cubeId = LightCube2Id # looks like a lamp / heart
+        cubeId = 2 # looks like a lamp / heart - LightCube2ID
     else:
         print("\n\nYou chose {} which is in group 3 onwards : Cozmo should bring back the cube that looks like the letters 'ab' over 'T'\n".format(chosen_drink)) 
-        cubeId = LightCube3Id # looks like the letters 'ab' over 'T'
+        cubeId = 3 # looks like the letters 'ab' over 'T' - LightCube3ID
 
 
 def go_to_object_test(robot: cozmo.robot.Robot):
@@ -131,5 +131,5 @@ def go_to_object_test(robot: cozmo.robot.Robot):
         print("Done.")
 
 
-# cozmo.run_program(go_to_object_test)
+cozmo.run_program(go_to_object_test)
 
