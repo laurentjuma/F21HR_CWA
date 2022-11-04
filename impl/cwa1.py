@@ -8,7 +8,7 @@ import asyncio
 
 import cozmo
 from cozmo.objects import LightCube1Id, LightCube2Id, LightCube3Id
-from cozmo.util import degrees, distance_mm
+from cozmo.util import degrees, distance_mm, speed_mmps
 
 # Get ingredients
 indegredientsUrl = "https://www.thecocktaildb.com/api/json/v2/9973533/list.php?i=list"
@@ -142,7 +142,9 @@ def go_to_object_test(robot: cozmo.robot.Robot):
 
         # Turn 180 degrees
         # Note: To turn to the right, just use a negative number.
-        robot.turn_in_place(degrees(180)).wait_for_completed()    
+        robot.turn_in_place(degrees(180)).wait_for_completed()
+
+        robot.drive_straight(distance_mm(700), speed_mmps(50)).wait_for_completed()    
 
 
 
