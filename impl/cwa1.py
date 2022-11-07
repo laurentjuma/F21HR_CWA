@@ -14,12 +14,6 @@ from cozmo.util import degrees, distance_mm, speed_mmps
 def go_to_object_test(robot: cozmo.robot.Robot):
     '''The core of the go to object test program'''
 
-    # requiredCube = robot.world.get_light_cube(drinks["sundowner"])
-
-    # Move lift down and tilt the head up
-    # robot.move_lift(-3)
-    # robot.set_head_angle(degrees(0)).wait_for_completed()
-
     # look around and try to find a cube
     # look_around = robot.start_behavior(cozmo.behavior.BehaviorTypes.LookAroundInPlace)
 
@@ -38,14 +32,6 @@ def go_to_object_test(robot: cozmo.robot.Robot):
         # look_around.stop()
 
     if cube:
-        # Drive to 70mm away from the cube (much closer and Cozmo
-        # will likely hit the cube) and then stop.
-
-        # action = robot.go_to_object(cube, distance_mm(70.0))
-        # action.wait_for_completed()
-        # print("Completed action: result = %s" % action)
-        # print("Done.")
-
         current_action = robot.pickup_object(cube, num_retries=3)
         current_action.wait_for_completed()
         if current_action.has_failed:
@@ -66,12 +52,12 @@ async def connect_to_cubes(robot: cozmo.robot.Robot):
 
 #cozmo identify face
 def cozmo_identify_face(robot: cozmo.robot.Robot):
-    # Look around and wait until Cozmo sees a face
-
+    
 # Move lift down and tilt the head up
     robot.move_lift(-3)
     robot.set_head_angle(degrees(30)).wait_for_completed()
 
+    # Look around and wait until Cozmo sees a face
     # look_around = robot.start_behavior(cozmo.behavior.BehaviorTypes.LookAroundInPlace)
     face = None
     try:
@@ -85,7 +71,8 @@ def cozmo_identify_face(robot: cozmo.robot.Robot):
 
     if face:
         #Go to face
-        robot.go_to_object(face, distance_mm(70.0)).wait_for_completed()
+        robot.drive_straight(distance_mm(700), speed_mmps(50)).wait_for_completed()    
+        # robot.go_to_object(face, distance_mm(70.0)).wait_for_completed()
 
 
 cozmo.run_program(cozmo_identify_face)
