@@ -70,18 +70,18 @@ def cozmo_identify_face(robot: cozmo.robot.Robot):
 
 # Move lift down and tilt the head up
     robot.move_lift(-3)
-    robot.set_head_angle(degrees(45)).wait_for_completed()
+    robot.set_head_angle(degrees(30)).wait_for_completed()
 
-    look_around = robot.start_behavior(cozmo.behavior.BehaviorTypes.LookAroundInPlace)
+    # look_around = robot.start_behavior(cozmo.behavior.BehaviorTypes.LookAroundInPlace)
     face = None
     try:
         face = robot.world.wait_for_observed_face(timeout=30)
         print("Found a face: %s" % face)
     except asyncio.TimeoutError:
         print("Didn't find a face")
-    finally:
-        # whether we find it or not, we want to stop the behavior
-        look_around.stop()
+    # finally:
+    #     # whether we find it or not, we want to stop the behavior
+    #     look_around.stop()
 
     if face:
         #Go to face
