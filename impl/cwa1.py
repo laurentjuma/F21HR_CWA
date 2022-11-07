@@ -11,45 +11,6 @@ from cozmo.objects import LightCube1Id, LightCube2Id, LightCube3Id
 from cozmo.util import degrees, distance_mm, speed_mmps
 
 
-def go_to_object_test(robot: cozmo.robot.Robot):
-    '''The core of the go to object test program'''
-
-    # look around and try to find a cube
-    # look_around = robot.start_behavior(cozmo.behavior.BehaviorTypes.LookAroundInPlace)
-
-    cube = None
-
-    try:
-        # cube = robot.world.wait_for_observed_light_cube(timeout=30)
-        print("Looking for cube - {}".format(cubeId))
-        cube = robot.world.get_light_cube(cubeId)
-
-        print("Found cube: %s" % cube)
-    except asyncio.TimeoutError:
-        print("Didn't find a cube")
-    # finally:
-        # whether we find it or not, we want to stop the behavior
-        # look_around.stop()
-
-    if cube:
-        current_action = robot.pickup_object(cube, num_retries=3)
-        current_action.wait_for_completed()
-        if current_action.has_failed:
-            code, reason = current_action.failure_reason
-            result = current_action.result
-            print("Pickup Cube failed: code=%s reason='%s' result=%s" % (code, reason, result))
-            return
-
-        # Turn 180 degrees
-        # Note: To turn to the right, just use a negative number.
-        robot.turn_in_place(degrees(180)).wait_for_completed()
-
-        robot.drive_straight(distance_mm(700), speed_mmps(50)).wait_for_completed()    
-
-
-async def connect_to_cubes(robot: cozmo.robot.Robot):
-    await robot.world.connect_to_cubes()
-
 #cozmo identify face
 def cozmo_identify_face(robot: cozmo.robot.Robot):
     
@@ -162,6 +123,52 @@ else:
     else:
         print("\n\nYou chose {} which is in group 3 onwards : Cozmo should bring back the cube that looks like the letters 'ab' over 'T' - {}\n".format(chosen_drink, LightCube3Id)) 
         cubeId = LightCube3Id # looks like the letters 'ab' over 'T' - LightCube3ID
+
+
+
+
+def go_to_object_test(robot: cozmo.robot.Robot):
+    '''The core of the go to object test program'''
+
+    # look around and try to find a cube
+    # look_around = robot.start_behavior(cozmo.behavior.BehaviorTypes.LookAroundInPlace)
+
+    cube = None
+
+    try:
+        # cube = robot.world.wait_for_observed_light_cube(timeout=30)
+        print("Looking for cube - {}".format(cubeId))
+        cube = robot.world.get_light_cube(cubeId)
+
+        print("Found cube: %s" % cube)
+    except asyncio.TimeoutError:
+        print("Didn't find a cube")
+    # finally:
+        # whether we find it or not, we want to stop the behavior
+        # look_around.stop()
+
+    if cube:
+        current_action = robot.pickup_object(cube, num_retries=3)
+        current_action.wait_for_completed()
+        if current_action.has_failed:
+            code, reason = current_action.failure_reason
+            result = current_action.result
+            print("Pickup Cube failed: code=%s reason='%s' result=%s" % (code, reason, result))
+            return
+
+        # Turn 180 degrees
+        # Note: To turn to the right, just use a negative number.
+        robot.turn_in_place(degrees(180)).wait_for_completed()
+
+        robot.drive_straight(distance_mm(700), speed_mmps(50)).wait_for_completed()    
+
+
+async def connect_to_cubes(robot: cozmo.robot.Robot):
+    await robot.world.connect_to_cubes()
+
+
+
+
 
 
 cozmo.robot.Robot.drive_off_charger_on_connect = False
