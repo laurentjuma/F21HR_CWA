@@ -67,6 +67,11 @@ async def connect_to_cubes(robot: cozmo.robot.Robot):
 #cozmo identify face
 def cozmo_identify_face(robot: cozmo.robot.Robot):
     # Look around and wait until Cozmo sees a face
+
+# Move lift down and tilt the head up
+    robot.move_lift(-3)
+    robot.set_head_angle(degrees(0)).wait_for_completed()
+
     look_around = robot.start_behavior(cozmo.behavior.BehaviorTypes.LookAroundInPlace)
     face = None
     try:
