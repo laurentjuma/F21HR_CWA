@@ -133,6 +133,8 @@ def go_to_object_test(robot: cozmo.robot.Robot):
     # look around and try to find a cube
     # look_around = robot.start_behavior(cozmo.behavior.BehaviorTypes.LookAroundInPlace)
 
+    robot.turn_in_place(degrees(180)).wait_for_completed()
+
     cube = None
 
     try:
