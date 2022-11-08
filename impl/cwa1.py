@@ -36,7 +36,7 @@ def cozmo_identify_face(robot: cozmo.robot.Robot):
         # robot.go_to_object(face, distance_mm(70.0)).wait_for_completed()
 
 
-cozmo.run_program(cozmo_identify_face)
+# cozmo.run_program(cozmo_identify_face)
 
 # Get ingredients
 indegredientsUrl = "https://www.thecocktaildb.com/api/json/v2/9973533/list.php?i=list"
@@ -162,7 +162,7 @@ def go_to_object_test(robot: cozmo.robot.Robot):
         # Note: To turn to the right, just use a negative number.
         robot.turn_in_place(degrees(180)).wait_for_completed()
 
-        robot.drive_straight(distance_mm(700), speed_mmps(50)).wait_for_completed()    
+        robot.drive_straight(distance_mm(300), speed_mmps(50)).wait_for_completed()    
 
 
 async def connect_to_cubes(robot: cozmo.robot.Robot):
