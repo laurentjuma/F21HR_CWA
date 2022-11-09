@@ -11,32 +11,6 @@ from cozmo.objects import LightCube1Id, LightCube2Id, LightCube3Id
 from cozmo.util import degrees, distance_mm, speed_mmps
 
 
-#cozmo identify face
-def cozmo_identify_face(robot: cozmo.robot.Robot):
-    
-# Move lift down and tilt the head up
-    robot.move_lift(-3)
-    robot.set_head_angle(degrees(30)).wait_for_completed()
-
-    # Look around and wait until Cozmo sees a face
-    # look_around = robot.start_behavior(cozmo.behavior.BehaviorTypes.LookAroundInPlace)
-    face = None
-    try:
-        face = robot.world.wait_for_observed_face(timeout=30)
-        print("Found a face: %s" % face)
-    except asyncio.TimeoutError:
-        print("Didn't find a face")
-    # finally:
-    #     # whether we find it or not, we want to stop the behavior
-    #     look_around.stop()
-
-    if face:
-        #Go to face
-        robot.drive_straight(distance_mm(700), speed_mmps(50)).wait_for_completed()    
-        # robot.go_to_object(face, distance_mm(70.0)).wait_for_completed()
-
-
-# cozmo.run_program(cozmo_identify_face)
 
 # Get ingredients
 indegredientsUrl = "https://www.thecocktaildb.com/api/json/v2/9973533/list.php?i=list"
@@ -93,7 +67,6 @@ else:
         for i in range(len(drinks)):
             drinksGroups.append([drinks[i]])
 
-    # print(drinksGroups)
 
     # assign each group to a cube
     cubeDictioanry = {
@@ -127,12 +100,12 @@ else:
 
 
 
-def go_to_object_test(robot: cozmo.robot.Robot):
-    '''The core of the go to object test program'''
-
+def go_get_drink(robot: cozmo.robot.Robot):
+    # will try to implement this later
     # look around and try to find a cube
     # look_around = robot.start_behavior(cozmo.behavior.BehaviorTypes.LookAroundInPlace)
 
+    # Turn 180 degrees
     robot.turn_in_place(degrees(180)).wait_for_completed()
 
     cube = None
@@ -159,7 +132,6 @@ def go_to_object_test(robot: cozmo.robot.Robot):
             return
 
         # Turn 180 degrees
-        # Note: To turn to the right, just use a negative number.
         robot.turn_in_place(degrees(180)).wait_for_completed()
 
         robot.drive_straight(distance_mm(300), speed_mmps(50)).wait_for_completed()    
@@ -169,11 +141,7 @@ async def connect_to_cubes(robot: cozmo.robot.Robot):
     await robot.world.connect_to_cubes()
 
 
-
-
-
-
 cozmo.robot.Robot.drive_off_charger_on_connect = False
 cozmo.run_program(connect_to_cubes)
-cozmo.run_program(go_to_object_test)
+cozmo.run_program(go_get_drink)
 
