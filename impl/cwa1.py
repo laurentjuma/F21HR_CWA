@@ -12,7 +12,7 @@ from cozmo.util import degrees, distance_mm, speed_mmps
 
 
 def cozmo_speak(robot, text):
-    robot.say_text(text, voice_pitch=0, duration_scalar=0.7).wait_for_completed()
+    robot.say_text(text = text, voice_pitch=0, duration_scalar=0.7).wait_for_completed()
 
 # Get ingredients
 indegredientsUrl = "https://www.thecocktaildb.com/api/json/v2/9973533/list.php?i=list"
