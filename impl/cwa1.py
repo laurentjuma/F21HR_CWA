@@ -28,7 +28,7 @@ for i in range(len(ingredients)):
 
 # prompt user to pick ingredient and get available drinks
 cocktailUrl = "https://www.thecocktaildb.com/api/json/v2/9973533/filter.php?i="
-text = "hello"
+text = "Hello my name is Cozmo, choose an ingredient so that I can suggest a drink for you"
 cozmo.run_program(cozmo_speak)
 ingredientIndex = int(input("\nEnter an ingredient -> Choose number: ")) - 1
 cocktailUrl += ingredients[ingredientIndex]
@@ -53,6 +53,8 @@ if(drinks == []):
     print("\nNo drinks found")
 else:
     # prompt user to pick drink
+    text = "Please choose a drink" 
+    cozmo.run_program(cozmo_speak)
     chosen_drink = drinks[int(input("\nEnter a drink -> Choose number: ")) - 1]
    
     # print("\033c")
@@ -92,12 +94,18 @@ else:
         print("\n")
 
     if(chosen_drink in drinksGroups[0]):
+        text = "You chose {}".format(chosen_drink) 
+        cozmo.run_program(cozmo_speak)
         print("\n\nYou chose {} which is in group 1: Cozmo should bring back the cube that looks like a paperclip - {}\n".format(chosen_drink, LightCube1Id)) 
         cubeId = LightCube1Id # looks like a paperclip - LightCube1ID
     elif(chosen_drink in drinksGroups[1]):
+        text = "You chose {}".format(chosen_drink) 
+        cozmo.run_program(cozmo_speak)
         print("\n\nYou chose {} which is in group 2: Cozmo should bring back the cube that looks like a lamp / heart - {}\n".format(chosen_drink, LightCube2Id)) 
         cubeId = LightCube2Id # looks like a lamp / heart - LightCube2ID
     else:
+        text = "You chose {}".format(chosen_drink) 
+        cozmo.run_program(cozmo_speak)
         print("\n\nYou chose {} which is in group 3 onwards : Cozmo should bring back the cube that looks like the letters 'ab' over 'T' - {}\n".format(chosen_drink, LightCube3Id)) 
         cubeId = LightCube3Id # looks like the letters 'ab' over 'T' - LightCube3ID
 
