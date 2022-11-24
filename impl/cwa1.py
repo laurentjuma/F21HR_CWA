@@ -84,20 +84,19 @@ else:
     }
 
     if(chosen_drink in drinksGroups[0]):
-        text = "You chose {}".format(chosen_drink) 
+        text = "You chose {}. I will bring back the cube that looks like a paperclip - {}".format(chosen_drink, LightCube1Id) 
         cozmo.run_program(cozmo_speak)
-        #clear the screen
         print("\033c")
         print("\n\nYou chose {} which is in group 1: Cozmo should bring back the cube that looks like a paperclip - {}\n".format(chosen_drink, LightCube1Id)) 
         cubeId = LightCube1Id # looks like a paperclip - LightCube1ID
     elif(chosen_drink in drinksGroups[1]):
-        text = "You chose {}".format(chosen_drink) 
+        text = "You chose {}. I will bring back the cube that looks like a lamp / heart - {}".format(chosen_drink, LightCube2Id) 
         cozmo.run_program(cozmo_speak)
         print("\033c")
         print("\n\nYou chose {} which is in group 2: Cozmo should bring back the cube that looks like a lamp / heart - {}\n".format(chosen_drink, LightCube2Id)) 
         cubeId = LightCube2Id # looks like a lamp / heart - LightCube2ID
     else:
-        text = "You chose {}".format(chosen_drink) 
+        text = "You chose {}. I will bring back the cube that looks like the letters 'ab' over 'T' - {}".format(chosen_drink, LightCube3Id) 
         cozmo.run_program(cozmo_speak)
         print("\033c")
         print("\n\nYou chose {} which is in group 3 onwards : Cozmo should bring back the cube that looks like the letters 'ab' over 'T' - {}\n".format(chosen_drink, LightCube3Id)) 
@@ -159,5 +158,7 @@ async def connect_to_cubes(robot: cozmo.robot.Robot):
 
 cozmo.robot.Robot.drive_off_charger_on_connect = False
 cozmo.run_program(connect_to_cubes)
+
+print("/n/n/n/n/n/n/n/n/n")
 cozmo.run_program(go_get_drink)
 
