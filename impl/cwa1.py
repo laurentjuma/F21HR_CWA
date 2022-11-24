@@ -11,7 +11,7 @@ from cozmo.objects import LightCube1Id, LightCube2Id, LightCube3Id
 from cozmo.util import degrees, distance_mm, speed_mmps
 
 
-def cozmo_speak(robot: cozmo.robot.Robot, text):
+def cozmo_speak(robot, text):
     robot.say_text(text, voice_pitch=0, duration_scalar=0.7).wait_for_completed()
 
 # Get ingredients
