@@ -90,7 +90,7 @@ else:
         print("\n\nYou chose {} which is in group 1: Cozmo should bring back the cube that looks like a paperclip - {}\n".format(chosen_drink, LightCube1Id)) 
         cubeId = LightCube1Id # looks like a paperclip - LightCube1ID
     elif(chosen_drink in drinksGroups[1]):
-        text = "You chose {}. I will bring back the cube that looks like a lamp / heart - {}".format(chosen_drink, LightCube2Id) 
+        text = "You chose {}. I will bring back the cube that looks like a lamp or heart - {}".format(chosen_drink, LightCube2Id) 
         cozmo.run_program(cozmo_speak)
         print("\033c")
         print("\n\nYou chose {} which is in group 2: Cozmo should bring back the cube that looks like a lamp / heart - {}\n".format(chosen_drink, LightCube2Id)) 
