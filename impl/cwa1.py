@@ -81,6 +81,26 @@ else:
         3: "ab over T Cube"
     }
 
+    if(chosen_drink in drinksGroups[0]):
+        text = "You chose {}".format(chosen_drink) 
+        cozmo.run_program(cozmo_speak)
+        #clear the screen
+        print("\033c")
+        print("\n\nYou chose {} which is in group 1: Cozmo should bring back the cube that looks like a paperclip - {}\n".format(chosen_drink, LightCube1Id)) 
+        cubeId = LightCube1Id # looks like a paperclip - LightCube1ID
+    elif(chosen_drink in drinksGroups[1]):
+        text = "You chose {}".format(chosen_drink) 
+        cozmo.run_program(cozmo_speak)
+        print("\033c")
+        print("\n\nYou chose {} which is in group 2: Cozmo should bring back the cube that looks like a lamp / heart - {}\n".format(chosen_drink, LightCube2Id)) 
+        cubeId = LightCube2Id # looks like a lamp / heart - LightCube2ID
+    else:
+        text = "You chose {}".format(chosen_drink) 
+        cozmo.run_program(cozmo_speak)
+        print("\033c")
+        print("\n\nYou chose {} which is in group 3 onwards : Cozmo should bring back the cube that looks like the letters 'ab' over 'T' - {}\n".format(chosen_drink, LightCube3Id)) 
+        cubeId = LightCube3Id # looks like the letters 'ab' over 'T' - LightCube3ID
+
     for i in range(len(drinksGroups)):
         try:
             print("Group {} - {}".format(i + 1, cubeDictioanry[i + 1]))
@@ -92,24 +112,6 @@ else:
         for drink in g:
             print(drink, end=", ")
         print("\n")
-
-    if(chosen_drink in drinksGroups[0]):
-        text = "You chose {}".format(chosen_drink) 
-        cozmo.run_program(cozmo_speak)
-        print("\n\nYou chose {} which is in group 1: Cozmo should bring back the cube that looks like a paperclip - {}\n".format(chosen_drink, LightCube1Id)) 
-        cubeId = LightCube1Id # looks like a paperclip - LightCube1ID
-    elif(chosen_drink in drinksGroups[1]):
-        text = "You chose {}".format(chosen_drink) 
-        cozmo.run_program(cozmo_speak)
-        print("\n\nYou chose {} which is in group 2: Cozmo should bring back the cube that looks like a lamp / heart - {}\n".format(chosen_drink, LightCube2Id)) 
-        cubeId = LightCube2Id # looks like a lamp / heart - LightCube2ID
-    else:
-        text = "You chose {}".format(chosen_drink) 
-        cozmo.run_program(cozmo_speak)
-        print("\n\nYou chose {} which is in group 3 onwards : Cozmo should bring back the cube that looks like the letters 'ab' over 'T' - {}\n".format(chosen_drink, LightCube3Id)) 
-        cubeId = LightCube3Id # looks like the letters 'ab' over 'T' - LightCube3ID
-
-
 
 
 def go_get_drink(robot: cozmo.robot.Robot):
