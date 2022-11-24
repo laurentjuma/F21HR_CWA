@@ -21,7 +21,11 @@ response = requests.request("GET", indegredientsUrl)
 # create array of ingredients
 ingredients = []
 for ing in response.json()['drinks']:
-    ingredients.append(ing['strIngredient1'])
+    if(len(ingredients)<15):
+        ingredients.append(ing['strIngredient1'])
+    else:
+        break
+        
 for i in range(len(ingredients)):
     print("{} {}".format(i + 1, ingredients[i]), end="\n")
 
