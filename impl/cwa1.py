@@ -45,8 +45,6 @@ if(response == "None Found"):
 for drink in response:
     drinks.append(drink['strDrink'])
 
-for i in range(len(drinks)):
-    print("{} {}".format(i + 1, drinks[i]), end="\n")
 
 if(drinks == []):
     print("\nNo drinks found")
@@ -56,7 +54,9 @@ else:
     cozmo.run_program(cozmo_speak)
     #clear the screen
     print("\033c")
-    print("Drinks containing {}:\n".format(ingredients[ingredientIndex]))   
+    print("Drinks containing {}:\n".format(ingredients[ingredientIndex]))
+    for i in range(len(drinks)):
+        print("{} {}".format(i + 1, drinks[i]), end="\n")   
     chosen_drink = drinks[int(input("\nEnter a drink -> Choose number: ")) - 1]
    
     # print("\033c")
