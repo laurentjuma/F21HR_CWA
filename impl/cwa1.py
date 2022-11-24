@@ -10,8 +10,8 @@ import cozmo
 from cozmo.objects import LightCube1Id, LightCube2Id, LightCube3Id
 from cozmo.util import degrees, distance_mm, speed_mmps
 
-
-def cozmo_speak(robot, text):
+text = "hello"
+def cozmo_speak(robot:cozmo.robot.Robot):
     robot.say_text(text = text, voice_pitch=0, duration_scalar=0.7).wait_for_completed()
 
 # Get ingredients
@@ -28,7 +28,8 @@ for i in range(len(ingredients)):
 
 # prompt user to pick ingredient and get available drinks
 cocktailUrl = "https://www.thecocktaildb.com/api/json/v2/9973533/filter.php?i="
-cozmo.run_program(cozmo_speak(cozmo.robot.Robot,"Hello, I am Cozmo. I am here to help you make a cocktail. Please select an ingredient from the list below."))
+text = "hello"
+cozmo.run_program(cozmo_speak)
 ingredientIndex = int(input("\nEnter an ingredient -> Choose number: ")) - 1
 cocktailUrl += ingredients[ingredientIndex]
 response = requests.request("GET", cocktailUrl).json()['drinks']
