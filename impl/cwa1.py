@@ -29,7 +29,7 @@ for i in range(len(ingredients)):
 # prompt user to pick ingredient and get available drinks
 cocktailUrl = "https://www.thecocktaildb.com/api/json/v2/9973533/filter.php?i="
 text = "hello"
-cozmo.run_program(cozmo_speak)
+#cozmo.run_program(cozmo_speak)
 ingredientIndex = int(input("\nEnter an ingredient -> Choose number: ")) - 1
 cocktailUrl += ingredients[ingredientIndex]
 response = requests.request("GET", cocktailUrl).json()['drinks']
