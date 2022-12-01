@@ -10,6 +10,10 @@ import cozmo
 from cozmo.objects import LightCube1Id, LightCube2Id, LightCube3Id
 from cozmo.util import degrees, distance_mm, speed_mmps
 
+text = "hello"
+def cozmo_speak(robot:cozmo.robot.Robot):
+    robot.say_text(text = text, voice_pitch=0, duration_scalar=0.7).wait_for_completed()
+
 # Get ingredients
 indegredientsUrl = "https://www.thecocktaildb.com/api/json/v2/9973533/list.php?i=list"
 response = requests.request("GET", indegredientsUrl)
@@ -17,13 +21,19 @@ response = requests.request("GET", indegredientsUrl)
 # create array of ingredients
 ingredients = []
 for ing in response.json()['drinks']:
-    ingredients.append(ing['strIngredient1'])
+    if(len(ingredients)<15):
+        ingredients.append(ing['strIngredient1'])
+    else:
+        break
+        
 for i in range(len(ingredients)):
     print("{} {}".format(i + 1, ingredients[i]), end="\n")
 
 
 # prompt user to pick ingredient and get available drinks
 cocktailUrl = "https://www.thecocktaildb.com/api/json/v2/9973533/filter.php?i="
+text = "Hello my name is Cozmo, choose an ingredient so that I can suggest a drink for you"
+cozmo.run_program(cozmo_speak)
 ingredientIndex = int(input("\nEnter an ingredient -> Choose number: ")) - 1
 cocktailUrl += ingredients[ingredientIndex]
 response = requests.request("GET", cocktailUrl).json()['drinks']
@@ -38,15 +48,19 @@ if(response == "None Found"):
 
 for drink in response:
     drinks.append(drink['strDrink'])
-print("Drinks containing {}:\n".format(ingredients[ingredientIndex]))   
 
-for i in range(len(drinks)):
-    print("{} {}".format(i + 1, drinks[i]), end="\n")
 
 if(drinks == []):
     print("\nNo drinks found")
 else:
     # prompt user to pick drink
+    text = "Please choose a drink" 
+    cozmo.run_program(cozmo_speak)
+    #clear the screen
+    print("\033c")
+    print("Drinks containing {}:\n".format(ingredients[ingredientIndex]))
+    for i in range(len(drinks)):
+        print("{} {}".format(i + 1, drinks[i]), end="\n")   
     chosen_drink = drinks[int(input("\nEnter a drink -> Choose number: ")) - 1]
    
     # print("\033c")
@@ -65,7 +79,6 @@ else:
         for i in range(len(drinks)):
             drinksGroups.append([drinks[i]])
 
-    # print(drinksGroups)
 
     # assign each group to a cube
     cubeDictioanry = {
@@ -73,6 +86,25 @@ else:
         2: "Lamp / Heart Cube",
         3: "ab over T Cube"
     }
+
+    if(chosen_drink in drinksGroups[0]):
+        text = "You chose {}. I will bring back the cube that looks like a paperclip - {}".format(chosen_drink, LightCube1Id) 
+        cozmo.run_program(cozmo_speak)
+        print("\033c")
+        print("\n\nYou chose {} which is in group 1: Cozmo should bring back the cube that looks like a paperclip - {}\n".format(chosen_drink, LightCube1Id)) 
+        cubeId = LightCube1Id # looks like a paperclip - LightCube1ID
+    elif(chosen_drink in drinksGroups[1]):
+        text = "You chose {}. I will bring back the cube that looks like a lamp or heart - {}".format(chosen_drink, LightCube2Id) 
+        cozmo.run_program(cozmo_speak)
+        print("\033c")
+        print("\n\nYou chose {} which is in group 2: Cozmo should bring back the cube that looks like a lamp / heart - {}\n".format(chosen_drink, LightCube2Id)) 
+        cubeId = LightCube2Id # looks like a lamp / heart - LightCube2ID
+    else:
+        text = "You chose {}. I will bring back the cube that looks like the letters 'ab' over 'T' - {}".format(chosen_drink, LightCube3Id) 
+        cozmo.run_program(cozmo_speak)
+        print("\033c")
+        print("\n\nYou chose {} which is in group 3 onwards : Cozmo should bring back the cube that looks like the letters 'ab' over 'T' - {}\n".format(chosen_drink, LightCube3Id)) 
+        cubeId = LightCube3Id # looks like the letters 'ab' over 'T' - LightCube3ID
 
     for i in range(len(drinksGroups)):
         try:
@@ -86,28 +118,14 @@ else:
             print(drink, end=", ")
         print("\n")
 
-    if(chosen_drink in drinksGroups[0]):
-        print("\n\nYou chose {} which is in group 1: Cozmo should bring back the cube that looks like a paperclip - {}\n".format(chosen_drink, LightCube1Id)) 
-        cubeId = LightCube1Id # looks like a paperclip - LightCube1ID
-    elif(chosen_drink in drinksGroups[1]):
-        print("\n\nYou chose {} which is in group 2: Cozmo should bring back the cube that looks like a lamp / heart - {}\n".format(chosen_drink, LightCube2Id)) 
-        cubeId = LightCube2Id # looks like a lamp / heart - LightCube2ID
-    else:
-        print("\n\nYou chose {} which is in group 3 onwards : Cozmo should bring back the cube that looks like the letters 'ab' over 'T' - {}\n".format(chosen_drink, LightCube3Id)) 
-        cubeId = LightCube3Id # looks like the letters 'ab' over 'T' - LightCube3ID
 
-
-def go_to_object_test(robot: cozmo.robot.Robot):
-    '''The core of the go to object test program'''
-
-    # requiredCube = robot.world.get_light_cube(drinks["sundowner"])
-
-    # Move lift down and tilt the head up
-    # robot.move_lift(-3)
-    # robot.set_head_angle(degrees(0)).wait_for_completed()
-
+def go_get_drink(robot: cozmo.robot.Robot):
+    # will try to implement this later
     # look around and try to find a cube
     # look_around = robot.start_behavior(cozmo.behavior.BehaviorTypes.LookAroundInPlace)
+
+    # Turn 180 degrees
+    robot.turn_in_place(degrees(180)).wait_for_completed()
 
     cube = None
 
@@ -124,14 +142,6 @@ def go_to_object_test(robot: cozmo.robot.Robot):
         # look_around.stop()
 
     if cube:
-        # Drive to 70mm away from the cube (much closer and Cozmo
-        # will likely hit the cube) and then stop.
-
-        # action = robot.go_to_object(cube, distance_mm(70.0))
-        # action.wait_for_completed()
-        # print("Completed action: result = %s" % action)
-        # print("Done.")
-
         current_action = robot.pickup_object(cube, num_retries=3)
         current_action.wait_for_completed()
         if current_action.has_failed:
@@ -141,12 +151,9 @@ def go_to_object_test(robot: cozmo.robot.Robot):
             return
 
         # Turn 180 degrees
-        # Note: To turn to the right, just use a negative number.
         robot.turn_in_place(degrees(180)).wait_for_completed()
 
-        robot.drive_straight(distance_mm(700), speed_mmps(50)).wait_for_completed()    
-
-
+        robot.drive_straight(distance_mm(300), speed_mmps(50)).wait_for_completed()    
 
 
 async def connect_to_cubes(robot: cozmo.robot.Robot):
@@ -156,5 +163,6 @@ async def connect_to_cubes(robot: cozmo.robot.Robot):
 cozmo.robot.Robot.drive_off_charger_on_connect = False
 cozmo.run_program(connect_to_cubes)
 
-cozmo.run_program(go_to_object_test)
+print("/n/n/n/n/n/n/n/n/n")
+cozmo.run_program(go_get_drink)
 
